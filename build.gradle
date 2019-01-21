@@ -1,0 +1,68 @@
+plugins {
+	id "org.springframework.boot" version "2.0.4.RELEASE"
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'groovy'
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+	mavenCentral()
+	jcenter()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+	maven { url 'http://jcenter.bintray.com' }
+}
+
+
+ext {
+	currentVersion = "0.0.1"
+}
+
+group = 'pl.sagiton'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencyManagement {
+	dependencies {
+		dependency group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+		dependency group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.21.0'
+		dependency group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.2'
+		dependency group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+		dependency group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+		dependency group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.9.6'
+		dependency group: 'org.spockframework', name: 'spock-core', version: '1.2-groovy-2.4'
+		dependency group: 'org.spockframework', name: 'spock-spring', version: '1.2-groovy-2.4'
+	}
+}
+
+dependencies {
+	// SPRING BOOT
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+
+	// UTILITIES
+	compileOnly group: 'org.projectlombok', name: 'lombok'
+
+	//SWAGGER
+	implementation group: 'io.springfox', name: 'springfox-swagger2'
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui'
+
+	// MAPPING
+	implementation group: 'ma.glasnost.orika', name: 'orika-core'
+
+	//AUTO SEVICE
+	compile group: 'com.google.auto.service', name: 'auto-service', version: '1.0-rc4'
+
+	// TESTING
+	testImplementation group: 'org.projectlombok', name: 'lombok'
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation group: 'org.springframework', name: 'spring-test'
+	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter'
+	testImplementation group: 'org.mockito', name: 'mockito-core'
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api'
+	testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine'
+	testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
+}
