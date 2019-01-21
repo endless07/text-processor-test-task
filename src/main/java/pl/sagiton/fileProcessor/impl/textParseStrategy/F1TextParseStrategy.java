@@ -12,9 +12,4 @@ public class F1TextParseStrategy implements TextParseStrategy {
     public boolean isApplicable(String textLine) {
         return textLine.startsWith(FormatType.F1.toString());
     }
-
-    @Override
-    public StringBuilder processLine() {
-        return null;
-    }
 }

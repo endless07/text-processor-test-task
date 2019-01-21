@@ -54,7 +54,14 @@ public class SearchTypeCityVisitedStrategy implements SearchStrategy{
     }
 
     private boolean textLineFitsTheSearchValueCheck(String textLine, String searchValue){
-        return textLine.contains(searchValue);
+        String reformatedSearchValue;
+        if (!searchValue.contains("-")) {
+            int indexToInsertDash = searchValue.length() - 1;
+            reformatedSearchValue = searchValue.substring(0, indexToInsertDash)+"-"+searchValue.substring(indexToInsertDash, searchValue.length());
+        } else {
+            reformatedSearchValue = searchValue.replaceAll("-", "");
+        }
+        return textLine.contains(searchValue) || textLine.contains(reformatedSearchValue);
     }
 
     private String formatValidTextLine(String textLine){
