@@ -1,4 +1,4 @@
-package pl.sagiton.fileProcessor.impl.textParseStrategy;
+package pl.sagiton.fileProcessor.impl.text_parse_strategy;
 
 import pl.sagiton.fileProcessor.impl.enums.FormatType;
 

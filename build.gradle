@@ -4,8 +4,6 @@ plugins {
 
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'groovy'
 apply plugin: 'io.spring.dependency-management'
 
 repositories {
@@ -27,42 +25,32 @@ targetCompatibility = 1.8
 
 dependencyManagement {
 	dependencies {
-		dependency group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+		dependency     group: 'org.projectlombok',  name: 'lombok',                version: '1.16.20'
+		dependency     group: 'org.junit.jupiter',  name: 'junit-jupiter-api',     version: '5.3.2'
+		dependency     group: 'org.junit.jupiter',  name: 'junit-jupiter-engine',  version: '5.3.2'
+		dependency     group: 'org.junit.jupiter',  name: 'junit-jupiter-params',  version: '5.3.2'
+		dependency     group: 'org.junit.vintage',  name: 'junit-vintage-engine',  version: '5.3.2'
 		dependency group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.21.0'
-		dependency group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.2'
-		dependency group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-		dependency group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-		dependency group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.9.6'
 		dependency group: 'org.spockframework', name: 'spock-core', version: '1.2-groovy-2.4'
-		dependency group: 'org.spockframework', name: 'spock-spring', version: '1.2-groovy-2.4'
 	}
 }
 
 dependencies {
-	// SPRING BOOT
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
-
 	// UTILITIES
 	compileOnly group: 'org.projectlombok', name: 'lombok'
 
-	//SWAGGER
-	implementation group: 'io.springfox', name: 'springfox-swagger2'
-	implementation group: 'io.springfox', name: 'springfox-swagger-ui'
-
-	// MAPPING
-	implementation group: 'ma.glasnost.orika', name: 'orika-core'
-
-	//AUTO SEVICE
-	compile group: 'com.google.auto.service', name: 'auto-service', version: '1.0-rc4'
-
-	// TESTING
-	testImplementation group: 'org.projectlombok', name: 'lombok'
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation group: 'org.springframework', name: 'spring-test'
+	// MOCKS
 	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter'
 	testImplementation group: 'org.mockito', name: 'mockito-core'
-	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api'
+
+	// UNIT TESTS
+	testImplementation group: 'org.projectlombok',  name: 'lombok'
+	testImplementation group: 'org.junit.jupiter',  name: 'junit-jupiter-api'
+	testImplementation group: 'org.junit.jupiter',  name: 'junit-jupiter-params'
+	testImplementation group: 'org.spockframework', name: 'spock-core'
+
+	testRuntimeOnly    group: 'org.junit.vintage',  name: 'junit-vintage-engine'
 	testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine'
-	testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
 }
+
+

@@ -1,11 +1,12 @@
-package pl.sagiton.fileProcessor.impl.searchTypeStrategy;
+package pl.sagiton.fileProcessor.impl;
 
 import lombok.SneakyThrows;
 import pl.sagiton.fileProcessor.impl.enums.FormatType;
 import pl.sagiton.fileProcessor.impl.exception.NoApplicableStrategyException;
-import pl.sagiton.fileProcessor.impl.textParseStrategy.F1TextParseStrategy;
-import pl.sagiton.fileProcessor.impl.textParseStrategy.F2TextParseStrategy;
-import pl.sagiton.fileProcessor.impl.textParseStrategy.TextParseStrategy;
+import pl.sagiton.fileProcessor.impl.search_type_strategy.SearchStrategy;
+import pl.sagiton.fileProcessor.impl.text_parse_strategy.F1TextParseStrategy;
+import pl.sagiton.fileProcessor.impl.text_parse_strategy.F2TextParseStrategy;
+import pl.sagiton.fileProcessor.impl.text_parse_strategy.TextParseStrategy;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -13,10 +14,15 @@ import java.util.List;
 
 public class MainParser {
 
+    public MainParser(SearchStrategy searchStrategy) {
+        this.searchStrategy = searchStrategy;
+    }
+
     private String lineSeparator = System.lineSeparator();
     private StringBuilder resultBuilder = new StringBuilder();
-    private TextParseStrategy actualStrategy = new F1TextParseStrategy();
+    private TextParseStrategy actualParseStrategy = new F1TextParseStrategy();
     private List<TextParseStrategy> textParseStrategies = getTextParseStrategies();
+    private SearchStrategy searchStrategy;
 
     private List<TextParseStrategy> getTextParseStrategies() {
         List<TextParseStrategy> strategies = new ArrayList<>();
@@ -31,14 +37,14 @@ public class MainParser {
         do {
             if (!textLine.startsWith(FormatType.D.toString())){
                 String finalTextLine = textLine;
-                if (!actualStrategy.isApplicable(finalTextLine)){
-                    actualStrategy = textParseStrategies.stream().filter(s -> s.isApplicable(finalTextLine)).findFirst().orElseThrow(NoApplicableStrategyException::new);
+                if (!actualParseStrategy.isApplicable(finalTextLine)){
+                    actualParseStrategy = textParseStrategies.stream().filter(s -> s.isApplicable(finalTextLine)).findFirst().orElseThrow(NoApplicableStrategyException::new);
                 }
                 textLine = reader.readLine();
                 continue;
             }
-            if (textLineFitsTheSearchValueCheck(textLine, searchValue)){
-                resultBuilder.append(formatValidTextLine(textLine));
+            if (searchStrategy.textLineFitsTheSearchValueCheck(textLine, searchValue, actualParseStrategy)){
+                resultBuilder.append(searchStrategy.formatValidTextLine(textLine, actualParseStrategy));
                 resultBuilder.append(lineSeparator);
             }
             textLine = reader.readLine();

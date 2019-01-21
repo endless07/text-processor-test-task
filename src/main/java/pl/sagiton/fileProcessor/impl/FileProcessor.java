@@ -2,20 +2,19 @@ package pl.sagiton.fileProcessor.impl;
 
 import lombok.SneakyThrows;
 import pl.sagiton.fileProcessor.impl.exception.NoApplicableStrategyException;
-import pl.sagiton.fileProcessor.impl.searchTypeStrategy.SearchTypeCityVisitedStrategy;
-import pl.sagiton.fileProcessor.impl.searchTypeStrategy.SearchTypeCityVisitorsStrategy;
-import pl.sagiton.fileProcessor.impl.searchTypeStrategy.SearchStrategy;
+import pl.sagiton.fileProcessor.impl.search_type_strategy.SearchTypeCityVisitedStrategy;
+import pl.sagiton.fileProcessor.impl.search_type_strategy.SearchTypeCityVisitorsStrategy;
+import pl.sagiton.fileProcessor.impl.search_type_strategy.SearchStrategy;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class FileProcessor {
 
-    List<SearchStrategy> strategies = getStrategies();
+    List<SearchStrategy> searchStrategies = getSearchStrategies();
 
-    private List<SearchStrategy> getStrategies() {
+    private List<SearchStrategy> getSearchStrategies() {
         List<SearchStrategy> strategies = new ArrayList<>();
         strategies.add(new SearchTypeCityVisitedStrategy());
         strategies.add(new SearchTypeCityVisitorsStrategy());
@@ -24,7 +23,8 @@ public class FileProcessor {
 
     @SneakyThrows
     public void processFile(BufferedReader reader, String searchType, String searchValue){
-        Optional<SearchStrategy> strategy = strategies.stream().filter(s -> s.isApplicable(searchType)).findFirst();
-        strategy.orElseThrow(NoApplicableStrategyException::new).process(reader, searchValue);
+        SearchStrategy searchStrategy = searchStrategies.stream().filter(s -> s.isApplicable(searchType)).findFirst().orElseThrow(NoApplicableStrategyException::new);
+        MainParser parser = new MainParser(searchStrategy);
+        parser.parse(reader, searchValue);
     }
 }
