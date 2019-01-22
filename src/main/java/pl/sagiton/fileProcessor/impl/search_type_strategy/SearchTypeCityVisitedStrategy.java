@@ -26,6 +26,15 @@ public class SearchTypeCityVisitedStrategy implements SearchStrategy{
 
     @Override
     public String formatValidTextLine(String textLine, TextParseStrategy actualStrategy){
-        return textLine.split(actualStrategy.strategySplitter())[1];
+        String[] splittedTextLine = textLine.split(actualStrategy.strategySplitter());
+        if (splittedTextLine.length != 3){
+            return "";
+        }
+        return makeStringPretty(textLine.split(actualStrategy.strategySplitter())[1]);
+    }
+
+    private String makeStringPretty(String textLine){
+        textLine = textLine.replaceAll(" ", "");
+        return textLine;
     }
 }

@@ -25,6 +25,7 @@ public class FileProcessor {
     public void processFile(BufferedReader reader, String searchType, String searchValue){
         SearchStrategy searchStrategy = searchStrategies.stream().filter(s -> s.isApplicable(searchType)).findFirst().orElseThrow(NoApplicableStrategyException::new);
         MainParser parser = new MainParser(searchStrategy);
-        parser.parse(reader, searchValue);
+        StringBuilder stringBuilder = parser.parse(reader, searchValue);
+        parser.printResults(stringBuilder);
     }
 }

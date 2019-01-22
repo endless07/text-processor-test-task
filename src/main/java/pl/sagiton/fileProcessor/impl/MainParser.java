@@ -32,7 +32,7 @@ public class MainParser {
     }
 
     @SneakyThrows
-    public void parse(BufferedReader reader, String searchValue){
+    StringBuilder parse(BufferedReader reader, String searchValue){
         String textLine = reader.readLine();
         do {
             if (!textLine.startsWith(FormatType.D.toString())){
@@ -44,12 +44,24 @@ public class MainParser {
                 continue;
             }
             if (searchStrategy.textLineFitsTheSearchValueCheck(textLine, searchValue, actualParseStrategy)){
-                resultBuilder.append(searchStrategy.formatValidTextLine(textLine, actualParseStrategy));
-                resultBuilder.append(lineSeparator);
+                String lineToAppend = searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy);
+                if (!lineToAppend.equals("")){
+                    resultBuilder.append(searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy));
+                    resultBuilder.append(lineSeparator);
+                }
             }
             textLine = reader.readLine();
         } while(textLine != null);
 
-        System.out.println(resultBuilder.toString());
+        return resultBuilder;
+    }
+
+    void printResults(StringBuilder builder){
+        System.out.println(builder.toString());
+    }
+
+    private String eraseRedundantSpaces(String textLine){
+        textLine = textLine.replaceAll(" ", "");
+        return textLine;
     }
 }
