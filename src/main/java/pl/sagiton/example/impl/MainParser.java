@@ -11,17 +11,19 @@ import pl.sagiton.example.impl.strategy.parse.TextParseStrategy;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MainParser {
 
-    public MainParser(SearchStrategy searchStrategy) {
+    public MainParser(SearchStrategy searchStrategy, Consumer<String> consumer) {
         this.searchStrategy = searchStrategy;
+        this.consumer = consumer;
     }
 
-    private StringBuilder resultBuilder = new StringBuilder();
     private TextParseStrategy actualParseStrategy = new F1TextParseStrategy();
     private List<TextParseStrategy> textParseStrategies = getTextParseStrategies();
     private SearchStrategy searchStrategy;
+    private Consumer<String> consumer;
 
     private List<TextParseStrategy> getTextParseStrategies() {
         List<TextParseStrategy> strategies = new ArrayList<>();
@@ -31,7 +33,7 @@ public class MainParser {
     }
 
     @SneakyThrows
-    StringBuilder parse(BufferedReader reader, String searchValue){
+    void parse(BufferedReader reader, String searchValue){
         String textLine = reader.readLine();
         do {
             if (!textLine.startsWith(FormatType.D.toString())){
@@ -45,13 +47,12 @@ public class MainParser {
             if (searchStrategy.textLineFitsTheSearchValueCheck(textLine, searchValue, actualParseStrategy)){
                 String lineToAppend = searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy);
                 if (!lineToAppend.isEmpty()){
-                    System.out.println((searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy)));
+                    consumer.accept((searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy)));
                 }
             }
             textLine = reader.readLine();
         } while(textLine != null);
 
-        return resultBuilder;
     }
 
     private String eraseRedundantSpaces(String textLine){

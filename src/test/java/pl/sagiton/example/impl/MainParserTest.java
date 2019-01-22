@@ -1,6 +1,9 @@
 package pl.sagiton.example.impl;
 
+import com.carmatechnologies.commons.testing.logging.ExpectedLogs;
+import com.carmatechnologies.commons.testing.logging.api.LogLevel;
 import lombok.SneakyThrows;
+import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -8,9 +11,10 @@ import pl.sagiton.example.impl.strategy.search.SearchStrategy;
 import pl.sagiton.example.impl.strategy.search.SearchTypeCityVisitedStrategy;
 import pl.sagiton.example.impl.strategy.search.SearchTypeCityVisitorsStrategy;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,32 +32,34 @@ class MainParserTest {
     String SEARCH_VALUE_CITY = "BAR";
     String SEARCH_VALUE_ID = "13654902-Y";
     String FILEPATH = "src/test/resources/testfile.txt";
+    List<String> results;
 
     @BeforeEach
     @SneakyThrows
     void setUp() {
         File resourcesDirectory = new File(FILEPATH);
         FileReader fileReader = new FileReader(resourcesDirectory);
+        results = new LinkedList<>();
         bufferedReader = new BufferedReader(fileReader);
         searchStrategyCity = new SearchTypeCityVisitorsStrategy();
         searchStrategyID = new SearchTypeCityVisitedStrategy();
-        mainParserCity = new MainParser(searchStrategyCity);
-        mainParserID = new MainParser(searchStrategyID);
+        mainParserCity = new MainParser(searchStrategyCity, results::add);
+        mainParserID = new MainParser(searchStrategyID, results::add);
         MockitoAnnotations.initMocks(this);
     }
 
     @SneakyThrows
     @Test
     void shouldParseGivenTextAsID(){
-        StringBuilder result = mainParserID.parse(bufferedReader, SEARCH_VALUE_ID);
-        assertEquals(result.toString(), getCorrectIDStringBuilder().toString());
+        mainParserID.parse(bufferedReader, SEARCH_VALUE_ID);
+        assertEquals(getCorrectIDStringBuilder().toString().trim(), String.join(separator, results).trim());
     }
 
     @SneakyThrows
     @Test
     void shouldParseGivenTextAsCITY(){
-        StringBuilder result = mainParserCity.parse(bufferedReader, SEARCH_VALUE_CITY);
-        assertEquals(result.toString(), getCorrectCityStringBuilder().toString());
+        mainParserCity.parse(bufferedReader, SEARCH_VALUE_CITY);
+        assertEquals(getCorrectCityStringBuilder().toString().trim(), String.join(separator, results).trim());
     }
 
     private StringBuilder getCorrectIDStringBuilder(){
@@ -61,7 +67,6 @@ class MainParserTest {
         stringBuilder.append("CITYX");
         stringBuilder.append(separator);
         stringBuilder.append("CITYX2");
-        stringBuilder.append(separator);
         return stringBuilder;
     }
 
@@ -72,7 +77,6 @@ class MainParserTest {
         stringBuilder.append("EricaSEQW, 83654902-Y");
         stringBuilder.append(separator);
         stringBuilder.append("EricaSEWW, 93654902-Y");
-        stringBuilder.append(separator);
         return stringBuilder;
     }
 }
