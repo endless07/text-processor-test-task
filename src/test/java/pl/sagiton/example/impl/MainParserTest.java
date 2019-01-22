@@ -1,9 +1,6 @@
 package pl.sagiton.example.impl;
 
-import com.carmatechnologies.commons.testing.logging.ExpectedLogs;
-import com.carmatechnologies.commons.testing.logging.api.LogLevel;
 import lombok.SneakyThrows;
-import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -14,11 +11,8 @@ import pl.sagiton.example.impl.strategy.search.SearchTypeCityVisitorsStrategy;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 
 class MainParserTest {
 
