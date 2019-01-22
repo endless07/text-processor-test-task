@@ -45,19 +45,16 @@ public class MainParser {
             }
             if (searchStrategy.textLineFitsTheSearchValueCheck(textLine, searchValue, actualParseStrategy)){
                 String lineToAppend = searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy);
-                if (!lineToAppend.equals("")){
-                    resultBuilder.append(searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy));
-                    resultBuilder.append(lineSeparator);
+                if (!lineToAppend.isEmpty()){
+//                    resultBuilder.append(searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy));
+//                    resultBuilder.append(lineSeparator);
+                    System.out.println((searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy)));
                 }
             }
             textLine = reader.readLine();
         } while(textLine != null);
 
         return resultBuilder;
-    }
-
-    void printResults(StringBuilder builder){
-        System.out.println(builder.toString());
     }
 
     private String eraseRedundantSpaces(String textLine){
