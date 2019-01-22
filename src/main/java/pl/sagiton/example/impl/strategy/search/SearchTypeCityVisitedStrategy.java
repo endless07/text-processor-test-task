@@ -1,8 +1,9 @@
-package pl.sagiton.fileProcessor.impl.search_type_strategy;
+package pl.sagiton.example.impl.strategy.search;
 
 
-import pl.sagiton.fileProcessor.impl.enums.SearchStrategyType;
-import pl.sagiton.fileProcessor.impl.text_parse_strategy.TextParseStrategy;
+import pl.sagiton.example.impl.enums.SearchStrategyType;
+import pl.sagiton.example.impl.exception.CorruptedTextLineException;
+import pl.sagiton.example.impl.strategy.parse.TextParseStrategy;
 
 public class SearchTypeCityVisitedStrategy implements SearchStrategy{
 
@@ -14,6 +15,11 @@ public class SearchTypeCityVisitedStrategy implements SearchStrategy{
 
     @Override
     public boolean textLineFitsTheSearchValueCheck(String textLine, String searchValue, TextParseStrategy actualStrategy){
+        String[] splittedTextLine = textLine.split(actualStrategy.strategySplitter());
+        if (splittedTextLine.length != 3){
+            throw new CorruptedTextLineException();
+        }
+        textLine = splittedTextLine[2];
         String reformatedSearchValue;
         if (!searchValue.contains("-")) {
             int indexToInsertDash = searchValue.length() - 1;

@@ -1,8 +1,9 @@
-package pl.sagiton.fileProcessor.impl.search_type_strategy;
+package pl.sagiton.example.impl.strategy.search;
 
 import org.junit.jupiter.api.Test;
-import pl.sagiton.fileProcessor.impl.text_parse_strategy.F1TextParseStrategy;
-import pl.sagiton.fileProcessor.impl.text_parse_strategy.F2TextParseStrategy;
+import pl.sagiton.example.impl.exception.CorruptedTextLineException;
+import pl.sagiton.example.impl.strategy.parse.F1TextParseStrategy;
+import pl.sagiton.example.impl.strategy.parse.F2TextParseStrategy;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,20 +33,14 @@ class SearchTypeCityVisitedStrategyTest {
 
     @Test
     void textLineShouldBeApplicableF1(){
-        boolean result = strategy.textLineFitsTheSearchValueCheck(TEXTLINE_CORRECT_F1, "LONDON", f1TextParseStrategy);
+        boolean result = strategy.textLineFitsTheSearchValueCheck(TEXTLINE_CORRECT_F1, "09877359D", f1TextParseStrategy);
         assertTrue(result);
     }
 
     @Test
     void textLineShouldBeApplicableF2(){
-        boolean result = strategy.textLineFitsTheSearchValueCheck(TEXTLINE_CORRECT_F2, "LONDON", f2TextParseStrategy);
+        boolean result = strategy.textLineFitsTheSearchValueCheck(TEXTLINE_CORRECT_F2, "09877359D", f2TextParseStrategy);
         assertTrue(result);
-    }
-
-    @Test
-    void textLineShouldNotBeApplicable(){
-        boolean result = strategy.textLineFitsTheSearchValueCheck(TEXTLINE_INCORRECT, "LONDON", f1TextParseStrategy);
-        assertFalse(result);
     }
 
     @Test

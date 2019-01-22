@@ -1,6 +1,6 @@
-package pl.sagiton.fileProcessor.impl.search_type_strategy;
+package pl.sagiton.example.impl.strategy.search;
 
-import pl.sagiton.fileProcessor.impl.text_parse_strategy.TextParseStrategy;
+import pl.sagiton.example.impl.strategy.parse.TextParseStrategy;
 
 public interface SearchStrategy {
     boolean isApplicable(String searchStrategy);

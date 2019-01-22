@@ -1,12 +1,12 @@
-package pl.sagiton.fileProcessor.impl;
+package pl.sagiton.example.impl;
 
 import lombok.SneakyThrows;
-import pl.sagiton.fileProcessor.impl.enums.FormatType;
-import pl.sagiton.fileProcessor.impl.exception.NoApplicableStrategyException;
-import pl.sagiton.fileProcessor.impl.search_type_strategy.SearchStrategy;
-import pl.sagiton.fileProcessor.impl.text_parse_strategy.F1TextParseStrategy;
-import pl.sagiton.fileProcessor.impl.text_parse_strategy.F2TextParseStrategy;
-import pl.sagiton.fileProcessor.impl.text_parse_strategy.TextParseStrategy;
+import pl.sagiton.example.impl.enums.FormatType;
+import pl.sagiton.example.impl.exception.NoApplicableStrategyException;
+import pl.sagiton.example.impl.strategy.search.SearchStrategy;
+import pl.sagiton.example.impl.strategy.parse.F1TextParseStrategy;
+import pl.sagiton.example.impl.strategy.parse.F2TextParseStrategy;
+import pl.sagiton.example.impl.strategy.parse.TextParseStrategy;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ public class MainParser {
         this.searchStrategy = searchStrategy;
     }
 
-    private String lineSeparator = System.lineSeparator();
     private StringBuilder resultBuilder = new StringBuilder();
     private TextParseStrategy actualParseStrategy = new F1TextParseStrategy();
     private List<TextParseStrategy> textParseStrategies = getTextParseStrategies();
@@ -46,8 +45,6 @@ public class MainParser {
             if (searchStrategy.textLineFitsTheSearchValueCheck(textLine, searchValue, actualParseStrategy)){
                 String lineToAppend = searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy);
                 if (!lineToAppend.isEmpty()){
-//                    resultBuilder.append(searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy));
-//                    resultBuilder.append(lineSeparator);
                     System.out.println((searchStrategy.formatValidTextLine(eraseRedundantSpaces(textLine), actualParseStrategy)));
                 }
             }

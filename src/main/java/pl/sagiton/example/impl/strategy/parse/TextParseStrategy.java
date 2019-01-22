@@ -1,4 +1,4 @@
-package pl.sagiton.fileProcessor.impl.text_parse_strategy;
+package pl.sagiton.example.impl.strategy.parse;
 
 public interface TextParseStrategy {
     String strategySplitter();

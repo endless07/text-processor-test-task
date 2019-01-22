@@ -1,6 +1,6 @@
-package pl.sagiton.fileProcessor.impl.text_parse_strategy;
+package pl.sagiton.example.impl.strategy.parse;
 
-import pl.sagiton.fileProcessor.impl.enums.FormatType;
+import pl.sagiton.example.impl.enums.FormatType;
 
 public class F1TextParseStrategy implements TextParseStrategy {
     @Override

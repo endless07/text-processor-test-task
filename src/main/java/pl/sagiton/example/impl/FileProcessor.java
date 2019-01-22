@@ -1,10 +1,10 @@
-package pl.sagiton.fileProcessor.impl;
+package pl.sagiton.example.impl;
 
 import lombok.SneakyThrows;
-import pl.sagiton.fileProcessor.impl.exception.NoApplicableStrategyException;
-import pl.sagiton.fileProcessor.impl.search_type_strategy.SearchTypeCityVisitedStrategy;
-import pl.sagiton.fileProcessor.impl.search_type_strategy.SearchTypeCityVisitorsStrategy;
-import pl.sagiton.fileProcessor.impl.search_type_strategy.SearchStrategy;
+import pl.sagiton.example.impl.exception.NoApplicableStrategyException;
+import pl.sagiton.example.impl.strategy.search.SearchTypeCityVisitedStrategy;
+import pl.sagiton.example.impl.strategy.search.SearchTypeCityVisitorsStrategy;
+import pl.sagiton.example.impl.strategy.search.SearchStrategy;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package pl.sagiton.fileProcessor.impl.exception;
+package pl.sagiton.example.impl.exception;
 
 public class NoApplicableStrategyException extends RuntimeException {
 

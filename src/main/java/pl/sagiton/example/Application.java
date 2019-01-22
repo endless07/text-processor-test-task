@@ -1,8 +1,8 @@
-package pl.sagiton.fileProcessor;
+package pl.sagiton.example;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import pl.sagiton.fileProcessor.impl.FileProcessor;
+import pl.sagiton.example.impl.FileProcessor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

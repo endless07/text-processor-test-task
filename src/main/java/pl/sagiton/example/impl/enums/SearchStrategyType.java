@@ -1,4 +1,4 @@
-package pl.sagiton.fileProcessor.impl.enums;
+package pl.sagiton.example.impl.enums;
 
 public enum SearchStrategyType {
     ID, CITY
