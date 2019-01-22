@@ -10,6 +10,6 @@ public class F2TextParseStrategy implements TextParseStrategy {
 
     @Override
     public boolean isApplicable(String textLine) {
-        return textLine.startsWith(FormatType.F2.toString());
+        return textLine.toLowerCase().startsWith(FormatType.F2.toString().toLowerCase());
     }
 }
